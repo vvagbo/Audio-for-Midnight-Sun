@@ -191,6 +191,30 @@
     <div class="ending-cta cursive-text">
         Summer isn't over yet...🌅
     </div>
+    <div class="countdown-wrapper">
+    <div class="countdown-title cursive-title">The Countdown Begins...</div>
+    <div class="countdown-container-horizontal" id="countdownTimer">
+        <div class="time-unit">
+            <span class="time-number" id="cdDays">00</span>
+            <span class="time-label cursive-label">days</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-unit">
+            <span class="time-number" id="cdHours">00</span>
+            <span class="time-label cursive-label">hours</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-unit">
+            <span class="time-number" id="cdMins">00</span>
+            <span class="time-label cursive-label">mins</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-unit">
+            <span class="time-number" id="cdSecs">00</span>
+            <span class="time-label cursive-label">secs</span>
+        </div>
+    </div>
+</div>
 </div>
 <style>/* ==========================================================================
    1. CORE & LAYOUT RESETS
@@ -570,7 +594,71 @@ h1 {
     letter-spacing: 0.5px !important;
     text-transform: none !important;
     text-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
-}</style>
+}
+/* HORIZONTAL COUNTDOWN & CURSIVE TEXT STYLING */
+.countdown-wrapper {
+    margin: 30px auto 15px;
+    padding: 18px 12px;
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 24px;
+    border: 1.5px dashed rgba(255, 105, 180, 0.5);
+    max-width: 380px;
+}
+
+/* Regular-sized cursive header */
+.countdown-title.cursive-title {
+    font-family: 'Caveat', cursive, sans-serif !important;
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+    color: #ff4500 !important;
+    margin-bottom: 10px !important;
+    letter-spacing: 0.5px !important;
+    text-transform: none !important;
+}
+
+/* Force horizontal layout */
+.countdown-container-horizontal {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.time-unit {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    gap: 3px !important;
+    background: #ffffff;
+    padding: 6px 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.time-number {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #111122;
+}
+
+/* Regular-sized cursive unit labels */
+.time-label.cursive-label {
+    font-family: 'Caveat', cursive, sans-serif !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: #d81b60 !important;
+    text-transform: none !important;
+}
+
+.time-colon {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #ff007f;
+    margin: 0 1px;
+}
+</style>
 <script>// OPEN ENVELOPE GATEKEEPER & PLAY AUDIO
 function openEnvelope() {
     const flap = document.getElementById('envelopeFlap');
@@ -620,4 +708,30 @@ function toggleAccordion(headerElement) {
         item.classList.add('active');
         content.style.maxHeight = content.scrollHeight + "px";
     }
-}</script>
+}
+// COUNTDOWN TIMER TO SEPT 23, 2026
+const targetDate = new Date("September 23, 2026 00:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const difference = targetDate - now;
+
+    if (difference <= 0) {
+        document.getElementById("countdownTimer").innerHTML = "<div style='font-family: Caveat, cursive; font-weight:700; color:#ff007f; font-size:1.5rem;'>It's time! ✈️✨</div>";
+        return;
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+    document.getElementById("cdDays").innerText = days < 10 ? '0' + days : days;
+    document.getElementById("cdHours").innerText = hours < 10 ? '0' + hours : hours;
+    document.getElementById("cdMins").innerText = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById("cdSecs").innerText = seconds < 10 ? '0' + seconds : seconds;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
