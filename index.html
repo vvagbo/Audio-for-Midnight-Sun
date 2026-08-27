@@ -191,7 +191,33 @@
     <div class="ending-cta cursive-text">
         Summer isn't over yet...🌅
     </div>
+<!-- COUNTDOWN TIMER SECTION -->
+<div class="countdown-wrapper">
+    <div class="countdown-title">T-MINUS TO GETAWAY</div>
+    <div class="countdown-container" id="countdownTimer">
+        <div class="time-block">
+            <span class="time-number" id="cdDays">00</span>
+            <span class="time-label">DAYS</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-block">
+            <span class="time-number" id="cdHours">00</span>
+            <span class="time-label">HOURS</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-block">
+            <span class="time-number" id="cdMins">00</span>
+            <span class="time-label">MINS</span>
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-block">
+            <span class="time-number" id="cdSecs">00</span>
+            <span class="time-label">SECS</span>
+        </div>
+    </div>
 </div>
+</div>
+##Css##
 <style>/* ==========================================================================
    1. CORE & LAYOUT RESETS
    ========================================================================== */
@@ -570,7 +596,65 @@ h1 {
     letter-spacing: 0.5px !important;
     text-transform: none !important;
     text-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+    /* COUNTDOWN TIMER STYLING */
+.countdown-wrapper {
+    margin: 30px 0 15px;
+    padding: 20px 15px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    border: 1.5px dashed rgba(255, 105, 180, 0.5);
+}
+
+.countdown-title {
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #ff4500;
+    margin-bottom: 12px;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+}
+
+.time-number {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #111122;
+    background: #ffffff;
+    padding: 6px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    text-align: center;
+}
+
+.time-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #d81b60;
+    margin-top: 6px;
+    letter-spacing: 1px;
+}
+
+.time-colon {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #ff007f;
+    margin-top: -16px;
+}
 }</style>
+##java##
 <script>// OPEN ENVELOPE GATEKEEPER & PLAY AUDIO
 function openEnvelope() {
     const flap = document.getElementById('envelopeFlap');
@@ -620,4 +704,30 @@ function toggleAccordion(headerElement) {
         item.classList.add('active');
         content.style.maxHeight = content.scrollHeight + "px";
     }
+    // COUNTDOWN TIMER TO SEPT 23, 2026
+const targetDate = new Date("September 23, 2026 00:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const difference = targetDate - now;
+
+    if (difference <= 0) {
+        document.getElementById("countdownTimer").innerHTML = "<div style='font-weight:900; color:#ff007f; font-size:1.2rem;'>IT'S TIME! ✈️✨</div>";
+        return;
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+    document.getElementById("cdDays").innerText = days < 10 ? '0' + days : days;
+    document.getElementById("cdHours").innerText = hours < 10 ? '0' + hours : hours;
+    document.getElementById("cdMins").innerText = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById("cdSecs").innerText = seconds < 10 ? '0' + seconds : seconds;
+}
+
+// Update every second
+setInterval(updateCountdown, 1000);
+updateCountdown();
 }</script>
